@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from './users.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserRoleDto } from './dto/update-user-role.dto';
 
 @Injectable()
 export class UsersService {
@@ -26,5 +27,14 @@ export class UsersService {
       include: { all: true },
     });
     return targetUser;
+  }
+
+  async updateUserRole(id: number, updateRoleDto: UpdateUserRoleDto) {
+    const user = await this.userRepository.findByPk(id);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+    user.role = updateRoleDto.role;
+    return user.save();
   }
 }

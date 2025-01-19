@@ -32,7 +32,6 @@ export class RoleAuthGuard implements CanActivate {
         return true;
       }
 
-      console.log(reqRoles);
 
       const req = context.switchToHttp().getRequest();
 
@@ -45,7 +44,7 @@ export class RoleAuthGuard implements CanActivate {
       }
       const user: User = this.jwtService.verify(token);
       req.user = user;
-      console.log(user.role);
+
       return reqRoles.includes(user.role);
     } catch (error) {
       throw new UnauthorizedException({ message: 'Not role' });

@@ -30,9 +30,9 @@ export class GoodsController {
 
   @ApiOperation({ summary: 'create good' })
   @ApiResponse({ status: 200, type: Good })
-//   @Roles('MODERATOR', 'ADMIN')
-//   @UseGuards(RoleAuthGuard)
-//   @UseGuards(JwtAuthGuard)
+  @Roles('MODERATOR', 'ADMIN')
+  @UseGuards(RoleAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('image'))
   create(@Body() dto: CreateGoodDto, @UploadedFile() image) {

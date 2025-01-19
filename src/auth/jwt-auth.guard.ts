@@ -20,17 +20,15 @@ export class JwtAuthGuard implements CanActivate {
       const bearer = authHeader.split(' ')[0];
       const token = authHeader.split(' ')[1];
 
-      console.log(authHeader);
-
       if (bearer !== 'Bearer' || !token) {
-        throw new UnauthorizedException({ message: 'Auth invalid1' });
+        throw new UnauthorizedException({ message: 'Auth invalid' });
       }
       const user = this.jwtService.verify(token);
       req.user = user;
       return true;
     } catch (error) {
       console.error(error);
-      throw new UnauthorizedException({ message: 'Auth invalid2' });
+      throw new UnauthorizedException({ message: 'Auth invalid' });
     }
   }
 }
